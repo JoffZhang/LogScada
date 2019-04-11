@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.vr.logscada.modules.log.dao.BoxOperationLogMapper">
+  <resultMap id="BaseResultMap" type="com.hx.vr.logscada.modules.log.model.BoxOperationLog">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="sys_type" jdbcType="TINYINT" property="sysType" />
+    <result column="state_code" jdbcType="SMALLINT" property="stateCode" />
+    <result column="sub_code" jdbcType="TINYINT" property="subCode" />
+    <result column="box_id" jdbcType="INTEGER" property="boxId" />
+    <result column="mac_addr" jdbcType="VARCHAR" property="macAddr" />
+    <result column="device_model" jdbcType="VARCHAR" property="deviceModel" />
+    <result column="channel_id" jdbcType="VARCHAR" property="channelId" />
+    <result column="app_version" jdbcType="VARCHAR" property="appVersion" />
+    <result column="label1" jdbcType="VARCHAR" property="label1" />
+    <result column="label2" jdbcType="VARCHAR" property="label2" />
+    <result column="label3" jdbcType="VARCHAR" property="label3" />
+    <result column="label4" jdbcType="VARCHAR" property="label4" />
+    <result column="label5" jdbcType="VARCHAR" property="label5" />
+    <result column="label6" jdbcType="VARCHAR" property="label6" />
+    <result column="json_msg" jdbcType="VARCHAR" property="jsonMsg" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Criteria_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, sys_type, state_code, sub_code, box_id, mac_addr, device_model, channel_id, app_version,
+    label1, label2, label3, label4, label5, label6, json_msg, message, operate_time
+  </sql>
+  <select id="selectByCriteria" parameterType="com.hx.vr.logscada.modules.log.model.BoxOperationLogCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from box_operation_log
+    <if test="_parameter != null">
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.hx.vr.logscada.modules.log.model.BoxOperationLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into box_operation_log (sys_type, state_code, sub_code,
+    box_id, mac_addr, device_model,
+    channel_id, app_version, label1,
+    label2, label3, label4,
+    label5, label6, json_msg,
+    message, operate_time)
+    values (#{sysType,jdbcType=TINYINT}, #{stateCode,jdbcType=SMALLINT}, #{subCode,jdbcType=TINYINT},
+    #{boxId,jdbcType=INTEGER}, #{macAddr,jdbcType=VARCHAR}, #{deviceModel,jdbcType=VARCHAR},
+    #{channelId,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, #{label1,jdbcType=VARCHAR},
+    #{label2,jdbcType=VARCHAR}, #{label3,jdbcType=VARCHAR}, #{label4,jdbcType=VARCHAR},
+    #{label5,jdbcType=VARCHAR}, #{label6,jdbcType=VARCHAR}, #{jsonMsg,jdbcType=VARCHAR},
+    #{message,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.vr.logscada.modules.log.model.BoxOperationLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into box_operation_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysType != null">
+        sys_type,
+      </if>
+      <if test="stateCode != null">
+        state_code,
+      </if>
+      <if test="subCode != null">
+        sub_code,
+      </if>
+      <if test="boxId != null">
+        box_id,
+      </if>
+      <if test="macAddr != null">
+        mac_addr,
+      </if>
+      <if test="deviceModel != null">
+        device_model,
+      </if>
+      <if test="channelId != null">
+        channel_id,
+      </if>
+      <if test="appVersion != null">
+        app_version,
+      </if>
+      <if test="label1 != null">
+        label1,
+      </if>
+      <if test="label2 != null">
+        label2,
+      </if>
+      <if test="label3 != null">
+        label3,
+      </if>
+      <if test="label4 != null">
+        label4,
+      </if>
+      <if test="label5 != null">
+        label5,
+      </if>
+      <if test="label6 != null">
+        label6,
+      </if>
+      <if test="jsonMsg != null">
+        json_msg,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysType != null">
+        #{sysType,jdbcType=TINYINT},
+      </if>
+      <if test="stateCode != null">
+        #{stateCode,jdbcType=SMALLINT},
+      </if>
+      <if test="subCode != null">
+        #{subCode,jdbcType=TINYINT},
+      </if>
+      <if test="boxId != null">
+        #{boxId,jdbcType=INTEGER},
+      </if>
+      <if test="macAddr != null">
+        #{macAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null">
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="label1 != null">
+        #{label1,jdbcType=VARCHAR},
+      </if>
+      <if test="label2 != null">
+        #{label2,jdbcType=VARCHAR},
+      </if>
+      <if test="label3 != null">
+        #{label3,jdbcType=VARCHAR},
+      </if>
+      <if test="label4 != null">
+        #{label4,jdbcType=VARCHAR},
+      </if>
+      <if test="label5 != null">
+        #{label5,jdbcType=VARCHAR},
+      </if>
+      <if test="label6 != null">
+        #{label6,jdbcType=VARCHAR},
+      </if>
+      <if test="jsonMsg != null">
+        #{jsonMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.hx.vr.logscada.modules.log.model.BoxOperationLogCriteria" resultType="java.lang.Long">
+    select count(*) from box_operation_log
+    <if test="_parameter != null">
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+
+
+  <select id="selectLoginRecordByMac" parameterType="com.hx.vr.logscada.modules.log.model.BoxOperationLogCriteria" resultMap="BaseResultMap">
+    SELECT 1 AS state_code,ACTION AS sub_code,c_time AS operate_time FROM b_box_log bbl,b_box bb WHERE bb.box_id=bbl.box_id AND bb.mac_address=#{macAddr,jdbcType=VARCHAR} ORDER BY c_time DESC
+  </select>
+  <select id="selectRegisterRecordByMac" parameterType="com.hx.vr.logscada.modules.log.model.BoxOperationLogCriteria" resultMap="BaseResultMap">
+    SELECT 0 AS state_code,0 AS sub_code,c_time AS operate_time FROM b_box WHERE mac_address=#{macAddr,jdbcType=VARCHAR} limit 1
+  </select>
+
+
+</mapper>
